@@ -7,6 +7,7 @@ RUN chmod +x gradlew
 RUN ./gradlew build -x test --parallel --continue
 
 COPY . .
+RUN chmod +x gradlew
 RUN ./gradlew bootJar -x test
 
 FROM openjdk:21-jdk-slim
