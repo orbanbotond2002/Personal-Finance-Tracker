@@ -1,0 +1,36 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: personal_finance_tracker_db_container
+    environment:
+      - POSTGRES_DB=personal_finance
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - personal_finance_tracker_volume:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - personal_finance_network
+
+
+  backend:
+    image: personal-finance-tracker
+    container_name: personal_finance_tracker_backend_container
+    environment:
+      - DB_URL=${DB_URL}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    networks:
+      - personal_finance_network
+
+volumes:
+  personal_finance_tracker_volume:
+
+networks:
+  personal_finance_network:
+    driver: bridge
