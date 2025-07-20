@@ -15,10 +15,10 @@ services:
 
 
   backend:
-    image: personal-finance-tracker
+    image: orbanbotond2002/personal_finance_tracker_backend:latest
     container_name: personal_finance_tracker_backend_container
     environment:
-      - DB_URL=${DB_URL}
+      - DB_URL=jdbc:postgresql://postgres:5432/personal_finance
       - DB_USERNAME=${DB_USERNAME}
       - DB_PASSWORD=${DB_PASSWORD}
     ports:
