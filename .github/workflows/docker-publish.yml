@@ -1,9 +1,11 @@
 name: Build and Push Docker Image
 
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows: ["Run Spring Boot Tests"]
+    types:
+      - completed
+
 
 jobs:
   build-and-push:
