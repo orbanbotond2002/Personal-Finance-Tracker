@@ -14,7 +14,7 @@ public class myController {
     public myController(MyRepository myRepository) {
         this.myRepository = myRepository;
     }
-    @GetMapping("/ping")
+    @GetMapping("/get")
     public List<MyModel> getAllMyModels() {
         return myRepository.findAll();
     }
