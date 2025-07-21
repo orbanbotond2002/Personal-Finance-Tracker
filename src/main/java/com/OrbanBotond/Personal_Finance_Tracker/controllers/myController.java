@@ -1,12 +1,26 @@
 package com.OrbanBotond.Personal_Finance_Tracker.controllers;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.OrbanBotond.Personal_Finance_Tracker.entities.MyModel;
+import com.OrbanBotond.Personal_Finance_Tracker.repositories.MyRepository;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
+@RequestMapping("/users")
 public class myController {
+    private final MyRepository myRepository;
+
+    public myController(MyRepository myRepository) {
+        this.myRepository = myRepository;
+    }
     @GetMapping("/ping")
-    public String pint(){
-        return "pong";
+    public List<MyModel> getAllMyModels() {
+        return myRepository.findAll();
+    }
+
+    @PostMapping
+    public MyModel addMyModel(@RequestBody MyModel myModel) {
+        return myRepository.save(myModel);
     }
 }
