@@ -17,6 +17,7 @@ public class Budget {
 
     private double budget;
     private int year;
+    @Column(name = "month_value")
     private int month;
 
     @ManyToOne
