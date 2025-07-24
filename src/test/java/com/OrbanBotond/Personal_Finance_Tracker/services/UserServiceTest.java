@@ -152,6 +152,8 @@ public class UserServiceTest {
     void deleteUser_ShouldCallDeleteById() {
         Long userId = 1L;
 
+        when(userRepository.existsById(userId)).thenReturn(true);
+
         doNothing().when(userRepository).deleteById(userId);
 
         userService.deleteUser(userId);
