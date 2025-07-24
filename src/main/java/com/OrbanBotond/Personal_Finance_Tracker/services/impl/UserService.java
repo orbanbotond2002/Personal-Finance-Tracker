@@ -6,10 +6,12 @@ import com.OrbanBotond.Personal_Finance_Tracker.entities.User;
 import com.OrbanBotond.Personal_Finance_Tracker.mappers.UserMapper;
 import com.OrbanBotond.Personal_Finance_Tracker.repositories.UserRepository;
 import com.OrbanBotond.Personal_Finance_Tracker.services.IUserService;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class UserService implements IUserService {
 
     private final UserRepository userRepository;
@@ -20,6 +22,10 @@ public class UserService implements IUserService {
 
     @Override
     public UserResponseDTO createUser(UserRequestDTO userRequestDTO) {
+        userRepository.findByEmail(userRequestDTO.getEmail())
+                .ifPresent(user -> {
+                    throw new RuntimeException("Email already exists");
+                });
         User newUser = UserMapper.newUser(userRequestDTO);
         return UserMapper.toDTO(userRepository.save(newUser));
     }
@@ -50,6 +56,9 @@ public class UserService implements IUserService {
 
     @Override
     public void deleteUser(Long userId) {
+        if (!userRepository.existsById(userId)) {
+            throw new RuntimeException("User not found.");
+        }
         userRepository.deleteById(userId);
     }
 }
